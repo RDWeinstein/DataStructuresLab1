@@ -60,7 +60,31 @@ assert fibonacci(10) == 55
 
 #6. Write a function parse_and_calculate(expression) that takes a mathematical expression in string format (e.g., "3+5*2-4/2") and returns the result. Handle the operations with the correct order of precedence.
 def parse_and_calculate(expression):
-    return eval(expression)
+    i = 0
+    while(i < len(expression)):
+        if expression[i] == '*':
+            a = int(expression[i-1])
+            b = int(expression[i+1])
+            product = a * b
+            expression = expression[:i-1] + str(product) + expression[i+2:]
+            i = 0
+        elif expression[i] == '/':
+            a = int(expression[i-1])
+            b = int(expression[i+1])
+            quot = a / b
+            expression = expression[:i-1] + str(product) + expression[i+2:]
+            i = 0
+    sum = int(expression[0])
+    expression = expression[1:]
+    for i in range(1, len(expression)):
+        if expression[i] == '+':
+            b = int(expression[i+1])
+            sum += b
+        if expression[i] == '-':
+            b = int(expression[i+1])
+            sum -= b
+    return(sum)
 
+            
+assert parse_and_calculate("3+5*2") == 13
 assert parse_and_calculate("3+5*2-4/2") == 11
-assert parse_and_calculate("10-3*2+8/4") == 6
